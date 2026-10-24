@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+#define MAX 100
+
+typedef struct {
+    int numero;
+    float saldo;
+} ContaBancaria;
+
+typedef struct {
+    int quantidade;
+    ContaBancaria contas[MAX];
+} Contas;
+
+void InicializaContas(Contas *cnt) {
+    cnt->quantidade = 0;
+}
+
+int VerificaNum(ContaBancaria conta, int num) {
+    return conta.numero == num;
+}
+
+float ConsultaSaldo(ContaBancaria conta) {
+    return conta.saldo;
+}
+
+void CriarNovasContas(Contas *cnt, int n) {
+    for (int i = 0; i < n && cnt->quantidade < MAX; i++) {
+        ContaBancaria *conta = &cnt->contas[cnt->quantidade];
+
+        conta->numero = cnt->quantidade + 1;
+
+        printf("Informe o saldo da conta %d: ", conta->numero);
+        scanf("%f", &conta->saldo);
+
+        cnt->quantidade++;
+    }
+}
+
+void ImprimirContas(Contas *cnt) {
+    for (int i = 0; i < cnt->quantidade; i++) {
+        printf("Conta: %d | Saldo: %.2f\n",
+               cnt->contas[i].numero,
+               ConsultaSaldo(cnt->contas[i]));
+    }
+}
+
+void ZerarSaldoConta(Contas *cnt, int num) {
+    for (int i = 0; i < cnt->quantidade; i++) {
+        if (VerificaNum(cnt->contas[i], num)) {
+            cnt->contas[i].saldo = 0;
+            return;
+        }
+    }
+}
+
+int main() {
+    Contas banco;
+
+    InicializaContas(&banco);
+    CriarNovasContas(&banco, 3);
+    ImprimirContas(&banco);
+
+    ZerarSaldoConta(&banco, 1);
+    ImprimirContas(&banco);
+
+    return 0;
+}
