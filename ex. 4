@@ -66,3 +66,5 @@ int main() {
 
     return 0;
 }
+
+// As funções VerificaNum e ConsultaSaldo dever estar no TAD Conta Bancária porque manipulam e consultam informações de uma única conta. Assim, o TAD Banco pode utilizá-las sem precisar conhecer os detalhes internos da estrutura de uma conta.
