@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+#define MAX 100
+
+typedef struct {
+    char nome[50];
+    int matricula;
+    float nota1;
+    float nota2;
+} Aluno;
+
+typedef struct {
+    Aluno alunos[MAX];
+    int quantidade;
+} TADAlunos;
+
+void cadastrar(TADAlunos *turma, int n) {
+    turma->quantidade = n;
+
+    for (int i = 0; i < n; i++) {
+        printf("Informe os dados do aluno(%d): ", i + 1);
+        scanf("%49s %d %f %f",
+              turma->alunos[i].nome,
+              &turma->alunos[i].matricula,
+              &turma->alunos[i].nota1,
+              &turma->alunos[i].nota2);
+    }
+}
+
+void imprimir(TADAlunos turma) {
+    printf("Matricula      Nome       Media\n");
+
+    for (int i = 0; i < turma.quantidade; i++) {
+        float media = (turma.alunos[i].nota1 +
+                       turma.alunos[i].nota2) / 2.0;
+
+        printf("%-14d %-10s %.2f\n",
+               turma.alunos[i].matricula,
+               turma.alunos[i].nome,
+               media);
+    }
+}
+
+int main() {
+    TADAlunos turma;
+    int n;
+
+    printf("Dados do aluno: nome(sem espacos), matricula, nota1, nota2\n\n");
+    scanf("%d", &n);
+
+    cadastrar(&turma, n);
+    imprimir(turma);
+
+    return 0;
+}
