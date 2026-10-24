@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+typedef struct {
+    int inscricao;
+    char nome[50];
+    int classe;
+    float horasNormais;
+    float horasExtras;
+} FICHA;
+
+int main() {
+    FICHA cadastro[100];
+    int quantidade;
+    float salarioReferencia;
+    float salarioHora, salarioNormal, salarioExtra;
+    float salarioBruto, inss, salarioLiquido;
+
+    printf("Digite o salario de referencia: ");
+    scanf("%f", &salarioReferencia);
+
+    printf("Digite a quantidade de funcionarios: ");
+    scanf("%d", &quantidade);
+
+    for (int i = 0; i < quantidade; i++) {
+        printf("\nFuncionario %d\n", i + 1);
+
+        printf("Numero de inscricao: ");
+        scanf("%d", &cadastro[i].inscricao);
+
+        printf("Nome: ");
+        scanf(" %49[^\n]", cadastro[i].nome);
+
+        printf("Classe (1 ou 2): ");
+        scanf("%d", &cadastro[i].classe);
+
+        printf("Horas normais: ");
+        scanf("%f", &cadastro[i].horasNormais);
+
+        printf("Horas extras: ");
+        scanf("%f", &cadastro[i].horasExtras);
+    }
+
+    for (int i = 0; i < quantidade; i++) {
+        salarioHora = salarioReferencia;
+
+        if (cadastro[i].classe == 1)
+            salarioHora *= 1.3;
+        else if (cadastro[i].classe == 2)
+            salarioHora *= 1.9;
+
+        salarioNormal = cadastro[i].horasNormais * salarioHora;
+        salarioExtra = cadastro[i].horasExtras * salarioHora * 1.3;
+
+        salarioBruto = salarioNormal + salarioExtra;
+        inss = salarioBruto * 0.11;
+        salarioLiquido = salarioBruto - inss;
+
+        printf("\nNUMERO DE INSCRICAO: %d\tNOME: %s\n",
+               cadastro[i].inscricao, cadastro[i].nome);
+        printf("SALARIO HORAS NORMAIS: %.2f\n", salarioNormal);
+        printf("SALARIO HORAS EXTRAS: %.2f\n", salarioExtra);
+        printf("DEDUCAO INSS: %.2f\n", inss);
+        printf("SALARIO LIQUIDO: %.2f\n", salarioLiquido);
+    }
+
+    return 0;
+}
